@@ -5,7 +5,7 @@
       - show run
       # - show version
       # - show interfaces
-    register: cisconfig
+  register: cisconfig
 
 - name: Print debug
   debug:
