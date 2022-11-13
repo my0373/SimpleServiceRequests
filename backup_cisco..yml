@@ -7,17 +7,13 @@
     mymessage: "hello world"
 
   tasks:
-    # - name: Backup Cisco Configuration
-    #   debug:
-    #     msg: "{{ mymessage }}"
-
     - name: show run
       ios_command:
-      commands:
-        - show run
-      host: "{{ ansible_host }}"
-      # username: roger
-      # password: password
+        commands:
+          - show run
+        host: "{{ ansible_host }}"
+        # username: roger
+        # password: password
       register: config
 
     - name: Backup Cisco Configuration
