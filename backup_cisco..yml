@@ -6,9 +6,5 @@
   vars:
     mymessage: "hello world"
 
-  tasks:
-    - name: run multiple commands on remote nodes
-      cisco.ios.ios_command:
-      commands:
-        - show version
-        - show interfaces
+  roles:
+    - ssrcisco
