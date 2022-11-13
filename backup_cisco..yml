@@ -7,23 +7,8 @@
     mymessage: "hello world"
 
   tasks:
-    - name: run show version on remote devices
+    - name: run multiple commands on remote nodes
       cisco.ios.ios_command:
-        commands: show version
-
-        # ios_command:
-        #   commands:
-        #     - show run
-        #   # host: "{{ ansible_host }}"
-        #   # username: roger
-        #   # password: password
-        register: config
-
-    - name: Backup Cisco Configuration
-      debug:
-        msg: "{{ config.stdout[0] }}"
-
-    # - name: save output to /etc/ansible/backups
-    #   copy:
-    #   content: "{{ config.stdout[0] }}"
-    #   dest: "/etc/ansible/backups/show_run_{{ inventory_hostname }}.txt"
+      commands:
+        - show version
+        - show interfaces
