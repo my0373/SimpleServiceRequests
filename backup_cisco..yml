@@ -14,7 +14,7 @@
         host: "{{ ansible_host }}"
         # username: roger
         # password: password
-      register: config
+        register: config
 
     - name: Backup Cisco Configuration
       debug:
