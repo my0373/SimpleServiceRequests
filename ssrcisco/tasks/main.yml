@@ -6,3 +6,7 @@
       # - show version
       # - show interfaces
     register: cisconfig
+
+- name: Print debug
+  debug:
+    msg: "{{ cisconfig }}"
