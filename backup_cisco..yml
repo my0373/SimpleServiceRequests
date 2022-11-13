@@ -2,10 +2,29 @@
 # This playbook prints a simple debug message
 - name: Echo
   hosts: all
+  gather_facts: true
   vars:
     mymessage: "hello world"
 
   tasks:
+    # - name: Backup Cisco Configuration
+    #   debug:
+    #     msg: "{{ mymessage }}"
+
+    - name: show run
+      ios_command:
+      commands:
+        - show run
+      host: "{{ ansible_host }}"
+      # username: roger
+      # password: password
+      register: config
+
     - name: Backup Cisco Configuration
       debug:
-        msg: "{{ mymessage }}"
+        msg: "{{ config.stdout[0] }}"
+
+    # - name: save output to /etc/ansible/backups
+    #   copy:
+    #   content: "{{ config.stdout[0] }}"
+    #   dest: "/etc/ansible/backups/show_run_{{ inventory_hostname }}.txt"
