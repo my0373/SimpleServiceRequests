@@ -5,7 +5,7 @@
 
   tasks:
     - name: Store backup config
-      copy: content="{{ BACKUP }}" dest=/tmp/backup.cfg
+      copy: content="{{ ARSTA_BACKUP }}" dest=/tmp/backup.cfg
 
     - name: Restore configuration from file
       arista.eos.eos_config:

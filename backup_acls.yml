@@ -23,5 +23,5 @@
     - name: Storing running config
       ansible.builtin.set_stats:
         data:
-          BACKUP: "{{ lookup('file', '/tmp/backup.cfg') }}"
+          ARSTA_BACKUP: "{{ lookup('file', '/tmp/backup.cfg') }}"
         aggregate: no
