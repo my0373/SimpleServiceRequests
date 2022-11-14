@@ -13,7 +13,7 @@
   vars:
     - vlan_id: 1
     - vlan_name: default
-    - intf_name: "Ethernet0/1"
+    - intf_name: "GigabitEthernet1"
     - intf_description: none
 
   tasks:
