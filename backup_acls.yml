@@ -11,3 +11,11 @@
 
     - ansible.builtin.debug:
         msg: "{{ aacls }}"
+
+    - name: configurable backup path
+      arista.eos.eos_config:
+        src: eos_template.j2
+        backup: yes
+        backup_options:
+          filename: backup.cfg
+          dir_path: /home/user
