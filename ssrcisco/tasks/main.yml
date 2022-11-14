@@ -7,6 +7,12 @@
       # - show interfaces
   register: cisconfig
 
+- name: Storing running config
+  ansible.builtin.set_stats:
+    data:
+      BKP_RUNNING_CONFIG: "{{ cisconfig.stdout[0] }}"
+    aggregate: no
+
 - name: Print debug
   debug:
     msg: "{{ cisconfig.stdout[0] }}"
