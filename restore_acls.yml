@@ -1,0 +1,12 @@
+---
+- name: Restore ACLS
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Store backup config
+      copy: content="{{ BACKUP }}" dest=/tmp/backup.cfg
+
+    - name: Restore configuration from file
+      arista.eos.eos_config:
+        src: /tmp/backup.cfg
