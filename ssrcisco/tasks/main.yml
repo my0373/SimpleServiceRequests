@@ -2,7 +2,7 @@
 - name: run multiple commands on remote nodes
   cisco.ios.ios_command:
     commands:
-      - show run
+      - show run full
       # - show version
       # - show interfaces
   register: cisconfig
