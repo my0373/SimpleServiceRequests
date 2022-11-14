@@ -2,11 +2,34 @@
 - name: snmp ro/rw string configuration
   hosts: all
   gather_facts: no
+  vars:
+    vlan_id: 16
+    vlan_name: "newapp"
+    interface: ""
 
   tasks:
-    - name: ensure that the desired snmp strings are present
-      cisco.ios.config:
-        commands:
-          - configure terminal
-          - vlan 15
-          - name newapp
+    # - name: ensure that the desired snmp strings are present
+    #   cisco.ios.config:
+    #     commands:
+    #       - configure terminal
+    #       - vlan 15
+    #       - name newapp
+
+    - name: Merge provided configuration with device configuration
+      cisco.ios.ios_vlans:
+        config:
+          - name: Vlan_10
+            vlan_id: 10
+            state: active
+            shutdown: disabled
+            remote_span: true
+        # - name: Vlan_20
+        #   vlan_id: 20
+        #   mtu: 610
+        #   state: active
+        #   shutdown: enabled
+        # - name: Vlan_30
+        #   vlan_id: 30
+        #   state: suspend
+        #   shutdown: enabled
+        state: merged
