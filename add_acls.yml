@@ -9,7 +9,7 @@
         state: gathered
       register: aacls
 
-    - name: Merge to update the given configuration with an existing ace
+    - name: Merge provided configuration with device configuration
       arista.eos.eos_acls:
         config:
           - afi: ipv4
@@ -17,7 +17,10 @@
               - name: test1
                 aces:
                   - sequence: 35
-                    log: true
-                    ttl:
-                      eq: 33
+                    grant: deny
+                    protocol: ospf
+                    source:
+                      subnet_address: 20.0.0.0/8
+                    destination:
+                      any: true
         state: merged
