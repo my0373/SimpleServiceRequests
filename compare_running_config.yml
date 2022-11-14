@@ -1,0 +1,23 @@
+---
+- name: snmp ro/rw string configuration
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Get a fresh running config
+      cisco.ios.ios_command:
+        commands:
+          - show run full
+      register: rngconfig
+
+    - name: Show the difference in json format
+      ansible.utils.fact_diff:
+        before: "{{ BKP_RUNNING_CONFIG }}"
+        after: "{{ rngconfig.stdout[0] }}"
+      register: mydiff
+
+- name: Storing running config
+  ansible.builtin.set_stats:
+    data:
+      CFG_DIFF: "{{ mydiff }}"
+    aggregate: no
