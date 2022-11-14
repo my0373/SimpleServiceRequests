@@ -8,3 +8,6 @@
       arista.eos.eos_acls:
         state: gathered
       register: aacls
+
+    - ansible.builtin.debug:
+        msg: "{{ aacls }}"
