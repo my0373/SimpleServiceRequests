@@ -1,0 +1,12 @@
+---
+- name: snmp ro/rw string configuration
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: ensure that the desired snmp strings are present
+      cisco.ios.config:
+        commands:
+          - configure terminal
+          - vlan 15
+          - name newapp
