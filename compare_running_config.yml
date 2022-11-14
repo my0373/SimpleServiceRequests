@@ -16,8 +16,8 @@
         after: "{{ rngconfig.stdout[0] }}"
       register: mydiff
 
-- name: Storing running config
-  ansible.builtin.set_stats:
-    data:
-      CFG_DIFF: "{{ mydiff }}"
-    aggregate: no
+    - name: Storing running config
+      ansible.builtin.set_stats:
+        data:
+          CFG_DIFF: "{{ mydiff }}"
+        aggregate: no
