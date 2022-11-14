@@ -4,11 +4,10 @@
   gather_facts: no
 
   tasks:
-
     - name: Gather the existing configuration
       arista.eos.eos_acls:
         state: gathered
-      register aacls
+      register: aacls
 
     - name: Print debug message
       debug:
