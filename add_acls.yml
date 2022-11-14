@@ -1,0 +1,23 @@
+---
+- name: Backup ACLS
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Gather the existing configuration
+      arista.eos.eos_acls:
+        state: gathered
+      register: aacls
+
+    - name: Merge to update the given configuration with an existing ace
+      arista.eos.eos_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: test1
+                aces:
+                  - sequence: 35
+                    log: true
+                    ttl:
+                      eq: 33
+        state: merged
