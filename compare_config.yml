@@ -1,0 +1,19 @@
+---
+- name: Backup ACLS
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Gather the current configuration
+      arista.eos.eos_acls:
+        state: gathered
+      register: aacls
+
+    - name: Compare with existing running config
+      ansible.utils.fact_diff:
+        before: "{{ ARSTA_BACKUP }}"
+        after: "{{ aacls }}"
+      register: mydiff
+
+    - ansible.builtin.debug:
+        msg: "{{ mydiff }}"
