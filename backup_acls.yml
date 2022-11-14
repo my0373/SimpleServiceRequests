@@ -1,7 +1,7 @@
 ---
-- name: snmp ro/rw string configuration
+- name: Backup ACLS
   hosts: all
-  gather_facts: no
+  gather_facts: yes
 
   tasks:
     - name: Gather the existing configuration
