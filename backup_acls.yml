@@ -19,3 +19,11 @@
         backup_options:
           filename: backup.cfg
           dir_path: /tmp/
+    - name: Read the config
+      user_data: "{{ lookup('file', '/tmp/backup.cfg') }}"
+
+    - name: Storing running config
+      ansible.builtin.set_stats:
+        data:
+          BACKUP: "{{ user_data }}"
+        aggregate: no
