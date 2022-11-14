@@ -2,6 +2,8 @@
 - name: Backup ACLS
   hosts: all
   gather_facts: yes
+  become: yes
+  connection: network_cli
 
   tasks:
     - name: Gather the existing configuration
