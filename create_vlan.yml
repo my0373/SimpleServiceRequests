@@ -1,35 +1,56 @@
 ---
-- name: snmp ro/rw string configuration
-  hosts: all
+# features:
+#   VLAN database
+#   L2 intf
+#   intf description
+# platforms:
+#   Cisco IOS switch
+
+- name: playbook for IOS L2 interface configuration
+  hosts: iosswitch
   gather_facts: no
+  become: true
   vars:
-    vlan_id: 16
-    vlan_name: "newapp"
-    interface: ""
+    - vlan_id: 1
+    - vlan_name: default
+    - intf_name: "Ethernet0/1"
+    - intf_description: none
 
   tasks:
-    # - name: ensure that the desired snmp strings are present
-    #   cisco.ios.config:
-    #     commands:
-    #       - configure terminal
-    #       - vlan 15
-    #       - name newapp
-
-    - name: Merge provided configuration with device configuration
+    - name: "set VLAN database for {{ vlan_name }}:{{ vlan_id }}"
       cisco.ios.ios_vlans:
         config:
-          - name: Vlan_10
-            vlan_id: 10
+          - name: "{{ vlan_name }}"
+            vlan_id: "{{ vlan_id }}"
             state: active
             shutdown: disabled
-            remote_span: true
-        # - name: Vlan_20
-        #   vlan_id: 20
-        #   mtu: 610
-        #   state: active
-        #   shutdown: enabled
-        # - name: Vlan_30
-        #   vlan_id: 30
-        #   state: suspend
-        #   shutdown: enabled
         state: merged
+      register: _vlans
+      notify: save
+
+    - name: "set L2 interface for {{ intf_name }}"
+      cisco.ios.ios_l2_interfaces:
+        config:
+          - name: "{{ intf_name }}"
+            mode: access
+            access:
+              vlan: "{{ vlan_id }}"
+        state: merged
+      register: _l2
+      notify: save
+
+    - name: "set interface description for {{ intf_name }}"
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ intf_name }}"
+            description: "{{ intf_description }}"
+            enabled: yes
+        state: merged
+      register: _intf
+      notify: save
+
+  handlers:
+    - name: save
+      cisco.ios.ios_command:
+        commands:
+          - write memory
